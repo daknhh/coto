@@ -122,6 +122,26 @@ class Client(BaseClient):
         return json.loads(r.text)
 
 
+    def get_ssoconfiguration(self):
+        """
+        Get the Configuration of the SSO.
+
+        Status:
+
+        Request Syntax:
+            .. code-block:: python
+
+                response = client.get_ssoconfiguration()
+
+        Returns:
+            string: status
+        """
+        operation = "GetSsoConfiguration"
+        contentstring = {}
+        r = self._post(operation,contentstring)
+        return json.loads(r.text)
+
+
     def associate_directory(self,directoryId,directoryType):
         """
         Associate Directory to the sso.
