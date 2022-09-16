@@ -73,7 +73,7 @@ class Client(BaseClient):
             apiendpoint = "https://" + region +".console.aws.amazon.com/singlesignon/api/identity-sync"
             json_body = {
                 "headers": headers,
-                "operation":operation,"region":region,"path":path,"params": {"Augmentation": "true","DryRun": "true"},"contentString": f"{json.dumps(contentstring)}"
+                "operation":operation,"region":region,"path":path,"params": {"Augmentation": "true","DryRun": "false"},"contentString": f"{json.dumps(contentstring)}"
             }
         else:
             apiendpoint = "https://" + region +".console.aws.amazon.com/singlesignon/api/peregrine"
