@@ -21,6 +21,7 @@ class Client(BaseClient):
     """
     def __init__(self, session):
         super().__init__(session)
+        print(f"⚙️  Init SSO Client")
         self.__xsrf_token = None
 
     def _url(self, api):
