@@ -1,7 +1,6 @@
 import requests
 import json
 from urllib.parse import unquote
-from colors import color
 from .. import clients
 
 
@@ -12,31 +11,31 @@ def dr(r):
         else:
             fg = 'red'
 
-        print(
-            color(
-                str(i.status_code) + \
-                    " " + i.request.method + \
-                    " " + i.request.url,
-                fg=fg,
-                style='underline'))
+        # print(
+        #     color(
+        #         str(i.status_code) + \
+        #             " " + i.request.method + \
+        #             " " + i.request.url,
+        #         fg=fg,
+        #         style='underline'))
 
         for k, v in i.request.headers.items():
             if k == 'Cookie':
-                print(color(k + ':', fg='blue'))
+                #print(color(k + ':', fg='blue'))
                 for c in v.split(";"):
                     c = c.strip()
                     (n, c) = c.split('=', maxsplit=1)
-                    print(color('    ' + n + ': ', fg='blue') + unquote(c))
-            else:
-                print(color(k + ':', fg='blue'), v)
+                    #print(color('    ' + n + ': ', fg='blue') + unquote(c))
+            #else:
+                #print(color(k + ':', fg='blue'), v)
 
-        for k, v in i.headers.items():
-            print(color(k + ':', fg='yellow'), v)
+        # for k, v in i.headers.items():
+        #     print(color(k + ':', fg='yellow'), v)
 
         if i.request.body and len(i.request.body) > 0:
-            print(color('Body:', fg='blue'))
+            #print(color('Body:', fg='blue'))
             print(i.request.body)
-            print(color('EOF', fg='blue'))
+            #print(color('EOF', fg='blue'))
 
 
 class Session:
@@ -160,7 +159,8 @@ class Session:
           * ``signin``
           * ``signin_amazon``
           * ``signin_aws``
-
+          * ``sso``
+          
         Args:
             service: name of the service, eg., `billing`
 

@@ -86,6 +86,14 @@ billing.set_tax_registration(
     }
 )
 ```
+## SSO
+### List List Directory Associations
+
+
+```python
+sso = session.client('sso')
+sso.list_associations()
+```
 
 ## Development
 

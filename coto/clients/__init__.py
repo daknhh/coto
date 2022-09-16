@@ -17,3 +17,4 @@ from . import resetpassword
 from . import signin
 from . import signin_amazon
 from . import signin_aws
+from . import sso
