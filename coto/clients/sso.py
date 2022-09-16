@@ -49,7 +49,7 @@ class Client(BaseClient):
 
 
 
-    def _post(self,operation):
+    def _post(self,operation,contentstring):
         apiendpoint = "https://" + region +".console.aws.amazon.com/singlesignon/api/peregrine"
         x_amz_target = "com.amazon.switchboard.service.SWBService."+operation
         headers={'x-csrf-token': self._xsrf_token(),
@@ -57,9 +57,10 @@ class Client(BaseClient):
             "Content-Encoding": "amz-1.0",
             "Accept": "application/json, text/javascript, */*",
             "Content-Type": "application/json"}
+
         json_body = {
             "headers": headers,
-            "operation":operation,"contentString":"{}",
+            "operation":operation,"contentString": f"{json.dumps(contentstring)}",
             "region":region,"path":"/control/"
         }
         r = self.session()._post(
@@ -69,8 +70,9 @@ class Client(BaseClient):
             "X-Amz-Target": x_amz_target,
             "Accept": "application/json, text/javascript, */*","content-type":"application/json"}
             )
+        print(r.text)
         if r.status_code != 200:
-            raise Exception("failed get")
+            raise Exception("failed post")
 
         return r
 
@@ -91,6 +93,51 @@ class Client(BaseClient):
             string: status
         """
         operation = "ListDirectoryAssociations"
-        r = self._post(operation)
+        contentstring = {}
+        r = self._post(operation,contentstring)
         return json.loads(r.text)
 
+    def disassociate_directory(self,directoryId,directoryType):
+        """
+        Associate Directory to the sso.
+
+        Status:
+
+        Request Syntax:
+            .. code-block:: python
+
+                response = client.disassociate_directory(
+                    directoryId, #Id of the directory
+                    directoryType #eg. ADConnector
+                )
+
+        Returns:
+            string: status
+        """
+        operation = "DisassociateDirectory"
+        contentstring = {"directoryId":directoryId,"directoryType":directoryType}
+        r = self._post(operation,contentstring)
+        return json.loads(r.text)
+
+
+    def associate_directory(self,directoryId,directoryType):
+        """
+        Associate Directory to the sso.
+
+        Status:
+
+        Request Syntax:
+            .. code-block:: python
+
+                response = client.associate_directory(
+                    directoryId, #Id of the directory
+                    directoryType #eg. ADConnector
+                )
+
+        Returns:
+            string: status
+        """
+        operation = "AssociateDirectory"
+        contentstring = {"directoryId":directoryId,"directoryType":directoryType}
+        r = self._post(operation,contentstring)
+        return json.loads(r.text)
