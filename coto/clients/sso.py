@@ -65,7 +65,6 @@ class Client(BaseClient):
             }
         if operation == "createSyncProfile" or operation == "createSyncTarget" or operation == "startSync":
             apiendpoint = "https://" + region +".console.aws.amazon.com/singlesignon/api/identity-sync"
-            print(path)
             json_body = {
                 "headers": headers,
                 "operation":operation,"region":region,"path":path,"params": {},"contentString": f"{json.dumps(contentstring)}"
@@ -85,7 +84,6 @@ class Client(BaseClient):
             "X-Amz-Target": x_amz_target,
             "Accept": "application/json, text/javascript, */*","content-type":"application/json"}
             )
-        print(r)
         if r.status_code == 200:
             print(f"✅ Successfully invoked: {operation}")
         if r.status_code != 200:
