@@ -69,6 +69,12 @@ class Client(BaseClient):
                 "headers": headers,
                 "operation":operation,"region":region,"path":path,"params": {},"contentString": f"{json.dumps(contentstring)}"
             }
+        if operation == "createSyncFilter":
+            apiendpoint = "https://" + region +".console.aws.amazon.com/singlesignon/api/identity-sync"
+            json_body = {
+                "headers": headers,
+                "operation":operation,"region":region,"path":path,"params": {"Augmentation": "true","DryRun": "true"},"contentString": f"{json.dumps(contentstring)}"
+            }
         else:
             apiendpoint = "https://" + region +".console.aws.amazon.com/singlesignon/api/peregrine"
             json_body = {
@@ -126,6 +132,30 @@ class Client(BaseClient):
         return r
 
     # sso api
+
+    def create_sync_filter(self,profilename, filtertype, associateddomain,samaccountname):
+        """
+        Obtain the list of the sso associations.
+
+        Status:
+
+        Request Syntax:
+            .. code-block:: python
+
+                response = client.create_sync_filter(
+                    FilterType,
+                    associateddomain,
+                    samaccountname
+                )
+
+        Returns:
+            string: status
+        """
+        operation = "createSyncFilter"
+        path = "/v0/profiles/"+ profilename + "/filters"
+        contentstring = {"FilterType":filtertype,"Attributes":"{\"associateddomain\":[\"" + associateddomain+ "\"],\"samaccountname\":[\""+samaccountname+"\"]}","Effect":"INCLUDE"}
+        r = self._post(operation,contentstring,path)
+        return json.loads(r.text)
 
     def list_associations(self):
         """
