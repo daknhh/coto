@@ -70,7 +70,8 @@ class Client(BaseClient):
             "X-Amz-Target": x_amz_target,
             "Accept": "application/json, text/javascript, */*","content-type":"application/json"}
             )
-        print(r.text)
+        if r.status_code == 200:
+            print(f"✅ Successfully invoked: {operation}")
         if r.status_code != 200:
             raise Exception("failed post")
 
